@@ -1,0 +1,7 @@
+auto-save-list/*
+*.elc
+ac-comphist.dat
+*.el~
+tramp
+cedet*
+.python-environments
