@@ -1,42 +1,42 @@
 [submodule "el-get/auto-complete"]
 	path = el-get/auto-complete
-	url = ./el-get/auto-complete
+	url = https://github.com/auto-complete/auto-complete.git
 [submodule "el-get/ctable"]
 	path = el-get/ctable
-	url = ./el-get/ctable/
+	url = https://github.com/kiwanami/emacs-ctable.git
 [submodule "el-get/deferred"]
 	path = el-get/deferred
-	url = ./el-get/deferred/
+	url = https://github.com/kiwanami/emacs-deferred.git
 [submodule "el-get/el-get"]
 	path = el-get/el-get
-	url = ./el-get/el-get/
+	url = http://github.com/dimitri/el-get.git
 [submodule "el-get/epc"]
 	path = el-get/epc
-	url = ./el-get/epc/
+	url = https://github.com/kiwanami/emacs-epc.git
 [submodule "el-get/flymake"]
 	path = el-get/flymake
-	url = ./el-get/flymake/
+	url = https://github.com/illusori/emacs-flymake.git
 [submodule "el-get/fuzzy"]
 	path = el-get/fuzzy
-	url = ./el-get/fuzzy/
+	url = https://github.com/auto-complete/fuzzy-el.git
 [submodule "el-get/jedi"]
 	path = el-get/jedi
-	url = ./el-get/jedi/
+	url = https://github.com/tkf/emacs-jedi.git
 [submodule "el-get/popup"]
 	path = el-get/popup
-	url = ./el-get/popup/
+	url = https://github.com/auto-complete/popup-el.git
 [submodule "el-get/pymacs"]
 	path = el-get/pymacs
-	url = ./el-get/pymacs/
+	url = https://github.com/pinard/Pymacs.git
 [submodule "el-get/python-environment"]
 	path = el-get/python-environment
-	url = ./el-get/python-environment/
+	url = https://github.com/tkf/emacs-python-environment.git
 [submodule "el-get/rope"]
 	path = el-get/rope
-	url = ./el-get/rope/
+	url = https://github.com/python-rope/rope.git
 [submodule "el-get/ropemacs"]
 	path = el-get/ropemacs
-	url = ./el-get/ropemacs/
+	url = https://github.com/python-rope/ropemacs
 [submodule "el-get/ropemode"]
 	path = el-get/ropemode
-	url = ./el-get/ropemode/
+	url = https://github.com/python-rope/ropemode
