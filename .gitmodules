@@ -1,0 +1,42 @@
+[submodule "el-get/auto-complete"]
+	path = el-get/auto-complete
+	url = ./el-get/auto-complete
+[submodule "el-get/ctable"]
+	path = el-get/ctable
+	url = ./el-get/ctable/
+[submodule "el-get/deferred"]
+	path = el-get/deferred
+	url = ./el-get/deferred/
+[submodule "el-get/el-get"]
+	path = el-get/el-get
+	url = ./el-get/el-get/
+[submodule "el-get/epc"]
+	path = el-get/epc
+	url = ./el-get/epc/
+[submodule "el-get/flymake"]
+	path = el-get/flymake
+	url = ./el-get/flymake/
+[submodule "el-get/fuzzy"]
+	path = el-get/fuzzy
+	url = ./el-get/fuzzy/
+[submodule "el-get/jedi"]
+	path = el-get/jedi
+	url = ./el-get/jedi/
+[submodule "el-get/popup"]
+	path = el-get/popup
+	url = ./el-get/popup/
+[submodule "el-get/pymacs"]
+	path = el-get/pymacs
+	url = ./el-get/pymacs/
+[submodule "el-get/python-environment"]
+	path = el-get/python-environment
+	url = ./el-get/python-environment/
+[submodule "el-get/rope"]
+	path = el-get/rope
+	url = ./el-get/rope/
+[submodule "el-get/ropemacs"]
+	path = el-get/ropemacs
+	url = ./el-get/ropemacs/
+[submodule "el-get/ropemode"]
+	path = el-get/ropemode
+	url = ./el-get/ropemode/
