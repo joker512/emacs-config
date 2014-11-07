@@ -62,6 +62,9 @@
  '(sr-speedbar-auto-refresh nil))
 (global-set-key "\C-o" '(lambda () (interactive) (sr-speedbar-toggle) ) )
 
+(require 'ace-jump-mode)
+(global-set-key (kbd "C-c SPC") 'ace-jump-mode)
+
 ; line numbers
 (require 'linum)
 (global-linum-mode 1)
@@ -98,15 +101,18 @@
 ; midnight commander mode
 (require 'mc)
 
+; paste previous from buffer
+(global-set-key (kbd "C-M-y") '(lambda () (interactive) (yank 2)) )
+
 ; delete selection mode
-(delete-selection-mode 1)
+(cua-selection-mode 1)
 
 ; scrolling without moving the point
-; (global-unset-key (kbd "<C-next>"))
-(global-set-key (kbd "<C-next>") '(lambda () (interactive) (scroll-up 1) (delete-selection-mode 1) ) )
-(global-set-key (kbd "<C-prior>") '(lambda () (interactive) (scroll-down 1)) )
-(global-set-key (kbd "<C-M-prior>") '(lambda () (interactive) (scroll-other-window-down 1)) )
-(global-set-key (kbd "<C-M-next>") '(lambda () (interactive) (scroll-other-window 1)) )
+;(global-unset-key (kbd "C-o"))
+(global-set-key (kbd "C-<next>") '(lambda () (interactive) (scroll-up 1)) )
+(global-set-key (kbd "C-<prior>") '(lambda () (interactive) (scroll-down 1)) )
+(global-set-key (kbd "C-M-<prior>") '(lambda () (interactive) (scroll-other-window-down 1)) )
+(global-set-key (kbd "C-M-<next>") '(lambda () (interactive) (scroll-other-window 1)) )
 
 ; python mode
 (require 'cl-lib)
@@ -129,6 +135,7 @@
 (add-hook 'python-mode-hook '(lambda () (define-key python-mode-map "\C-m" 'newline-and-indent)))
 
 (global-set-key (kbd "C-\\") 'auto-complete)
+(global-auto-complete-mode t)
 ;(add-hook 'python-mode-hook 'auto-complete-mode)
 ;(add-hook 'python-mode-hook 'jedi:ac-setup)
 
@@ -139,8 +146,8 @@
 ;(setq-default py-shell-name "ipython")
 ;(setq-default py-which-bufname "IPython")
 
-(push "~/.virtualenvs/default/bin" exec-path)
-(setenv "PATH" (concat "~/.virtualenvs/default/bin" ":" (getenv "PATH") ))
+;(push "~/.virtualenvs/default/bin" exec-path)
+;(setenv "PATH" (concat "~/.virtualenvs/default/bin" ":" (getenv "PATH") ))
 
 (require 'pymacs)
 ;(autoload 'pymacs-apply "pymacs")
@@ -153,7 +160,7 @@
 
 (setq ropemacs-enable-autoimport 't)
 (setq ropemacs-autoimport-modules '("os" "random" "math" "shutil" "sys") )
-;(rope-generate-autoimport-cache)
+(rope-generate-autoimport-cache)
 
 ; code autocheck
 (when (load "flymake" t)
@@ -199,6 +206,9 @@
                          '(lambda (action pair pos-before)
                             (hl-paren-color-update))))))
 
+; protobuf mode
+(require 'protobuf-mode)
+
 ; easy switch between buffers
 (require 'ido)
 (ido-mode 'buffers) ;; only use this line to turn off ido for file names!
@@ -225,17 +235,32 @@
 (global-set-key (kbd "M-<right>") 'forward-whitespace)
 (global-set-key (kbd "M-<left>") '(lambda () (interactive) (forward-whitespace -1)) )
 
-; duplicate line
-(defun duplicate-line()
-  (interactive)
-  (move-beginning-of-line 1)
-  (kill-line)
-  (yank)
-  (open-line 1)
-  (next-line 1)
-  (yank)
-)
-(global-set-key (kbd "C-D") 'duplicate-line)
+; duplicate line or region
+(defun duplicate-current-line-or-region (arg)
+  (interactive "p")
+  (let (beg end (origin (point)))
+    (if (and mark-active (> (point) (mark)))
+        (exchange-point-and-mark))
+    (setq beg (line-beginning-position))
+    (if mark-active
+        (exchange-point-and-mark))
+    (if (and mark-active (> (length (thing-at-point 'line)) 1))
+	(previous-line))
+    (setq end (line-end-position))
+    (let ((region (buffer-substring-no-properties beg end)))
+      (dotimes (i arg)
+        (goto-char end)
+        (newline)
+        (insert region)
+        (setq end (point)))
+      (goto-char (+ origin (* (length region) arg) arg)))))
+
+(global-set-key (kbd "C-D") 'duplicate-current-line-or-region)
+
+; switch to new window automatically
+(defadvice split-window (after move-point-to-new-window activate)
+  "Moves the point to the newly created window after splitting."
+  (other-window 1))
 
 ; column-number-mode
 (column-number-mode)
@@ -272,6 +297,8 @@
 (workgroups-mode 1)
 (wg-load (concat temporary-file-directory "workgroup"))
 (add-hook 'kill-emacs-hook 'wg-update-all-workgroups-and-save)
+(global-set-key (kbd "C-x w <left>") 'wg-switch-left)
+(global-set-key (kbd "C-x w <right>") 'wg-switch-right)
 
 ; convenient copying
 (require 'copy)
@@ -286,6 +313,13 @@
 ; kill to the end of line
 (global-set-key (kbd "M-k") 'kill-word )
 (global-set-key (kbd "<C-S-delete>") 'kill-whole-line)
+
+; kill to the previous symbol
+(defun backwards-zap-to-char (char)
+  (interactive "cZap backwards to char: ")
+  (zap-to-char -1 char))
+
+(global-set-key (kbd "C-M-z") 'backwards-zap-to-char)
 
 ; fast file reload
 (global-set-key (kbd "C-x f") (quote revert-buffer))

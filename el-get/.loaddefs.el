@@ -247,7 +247,7 @@ Blocking version `jedi:install-server'.
 
 ;;;### (autoloads (pymacs-apply pymacs-call pymacs-exec pymacs-eval
 ;;;;;;  pymacs-autoload pymacs-load) "pymacs" "pymacs/pymacs.el"
-;;;;;;  (21546 28726))
+;;;;;;  (21595 41597))
 ;;; Generated autoloads from pymacs/pymacs.el
 
 (autoload 'pymacs-load "pymacs" "\
@@ -311,7 +311,7 @@ equivalents, other structures are converted into Lisp handles.
 ;;;;;;  "epc/epcs.el" "epc/test-epc.el" "fuzzy/fuzzy.el" "jedi/jedi-pkg.el"
 ;;;;;;  "jedi/test-jedi.el" "jedi/tryout-jedi.el" "popup/popup.el"
 ;;;;;;  "python-environment/python-environment.el" "python-environment/test-python-environment.el")
-;;;;;;  (21546 29469 168007))
+;;;;;;  (21595 41597 595975))
 
 ;;;***
 
