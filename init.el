@@ -160,7 +160,7 @@
 
 (setq ropemacs-enable-autoimport 't)
 (setq ropemacs-autoimport-modules '("os" "random" "math" "shutil" "sys") )
-(rope-generate-autoimport-cache)
+;(rope-generate-autoimport-cache)
 
 ; code autocheck
 (when (load "flymake" t)
@@ -309,6 +309,28 @@
 (global-set-key (kbd "<C-delete>") '(lambda () (interactive) (kill-line 0)) )
 (global-set-key (kbd "<C-M-delete>") (quote backward-kill-sexp) )
 (global-set-key (kbd "<M-delete>") (quote backward-kill-word) )
+
+; statistics
+(defun word-count-analysis (start end)
+  "Count how many times each word is used in the region.
+    Punctuation is ignored."
+  (interactive "r")
+  (let (words)
+    (save-excursion
+      (goto-char start)
+      (while (re-search-forward "\\w+" end t)
+	(let* ((word (intern (match-string 0)))
+	       (cell (assq word words)))
+	  (if cell
+	      (setcdr cell (1+ (cdr cell)))
+	    (setq words (cons (cons word 1) words))))))
+    (when (interactive-p)
+      (message "%S" words))
+    words))
+
+; convenient buffer processing
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(setq ibuffer-expert t)
 
 ; kill to the end of line
 (global-set-key (kbd "M-k") 'kill-word )
