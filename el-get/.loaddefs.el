@@ -4,15 +4,16 @@
 
 
 ;;;### (autoloads (global-auto-complete-mode auto-complete-mode auto-complete)
-;;;;;;  "auto-complete" "auto-complete/auto-complete.el" (21541 26862))
+;;;;;;  "auto-complete/auto-complete" "auto-complete/auto-complete.el"
+;;;;;;  (21575 46883 938581 67000))
 ;;; Generated autoloads from auto-complete/auto-complete.el
 
-(autoload 'auto-complete "auto-complete" "\
+(autoload 'auto-complete "auto-complete/auto-complete" "\
 Start auto-completion at current point.
 
 \(fn &optional SOURCES)" t nil)
 
-(autoload 'auto-complete-mode "auto-complete" "\
+(autoload 'auto-complete-mode "auto-complete/auto-complete" "\
 AutoComplete mode
 
 \(fn &optional ARG)" t nil)
@@ -24,12 +25,14 @@ Setting this variable directly does not take effect;
 either customize it (see the info node `Easy Customization')
 or call the function `global-auto-complete-mode'.")
 
-(custom-autoload 'global-auto-complete-mode "auto-complete" nil)
+(custom-autoload 'global-auto-complete-mode "auto-complete/auto-complete" nil)
 
-(autoload 'global-auto-complete-mode "auto-complete" "\
-Toggle Auto-Complete mode in every possible buffer.
-With prefix ARG, turn Global-Auto-Complete mode on if and only if
-ARG is positive.
+(autoload 'global-auto-complete-mode "auto-complete/auto-complete" "\
+Toggle Auto-Complete mode in all buffers.
+With prefix ARG, enable Global-Auto-Complete mode if ARG is positive;
+otherwise, disable it.  If called from Lisp, enable the mode if
+ARG is omitted or nil.
+
 Auto-Complete mode is enabled in all buffers where
 `auto-complete-mode-maybe' would do it.
 See `auto-complete-mode' for more information on Auto-Complete mode.
@@ -38,12 +41,13 @@ See `auto-complete-mode' for more information on Auto-Complete mode.
 
 ;;;***
 
-;;;### (autoloads (ac-config-default) "auto-complete-config" "auto-complete/auto-complete-config.el"
-;;;;;;  (21541 26862))
+;;;### (autoloads (ac-config-default) "auto-complete/auto-complete-config"
+;;;;;;  "auto-complete/auto-complete-config.el" (21575 46883 938581
+;;;;;;  67000))
 ;;; Generated autoloads from auto-complete/auto-complete-config.el
 
-(autoload 'ac-config-default "auto-complete-config" "\
-Not documented
+(autoload 'ac-config-default "auto-complete/auto-complete-config" "\
+
 
 \(fn)" nil nil)
 
@@ -51,52 +55,53 @@ Not documented
 
 ;;;### (autoloads (el-get-checksum el-get-make-recipes el-get-cd
 ;;;;;;  el-get-self-update el-get-update-packages-of-type el-get-update-all
-;;;;;;  el-get-version) "el-get" "el-get/el-get.el" (21541 26313))
+;;;;;;  el-get-version) "el-get/el-get" "el-get/el-get.el" (21575
+;;;;;;  46894 438791 651000))
 ;;; Generated autoloads from el-get/el-get.el
 
-(autoload 'el-get-version "el-get" "\
+(autoload 'el-get-version "el-get/el-get" "\
 Message the current el-get version
 
 \(fn)" t nil)
 
-(autoload 'el-get-update-all "el-get" "\
+(autoload 'el-get-update-all "el-get/el-get" "\
 Performs update of all installed packages.
 
 \(fn &optional NO-PROMPT)" t nil)
 
-(autoload 'el-get-update-packages-of-type "el-get" "\
+(autoload 'el-get-update-packages-of-type "el-get/el-get" "\
 Update all installed packages of type TYPE.
 
 \(fn TYPE)" t nil)
 
-(autoload 'el-get-self-update "el-get" "\
+(autoload 'el-get-self-update "el-get/el-get" "\
 Update el-get itself.  The standard recipe takes care of reloading the code.
 
 \(fn)" t nil)
 
-(autoload 'el-get-cd "el-get" "\
+(autoload 'el-get-cd "el-get/el-get" "\
 Open dired in the package directory.
 
 \(fn PACKAGE)" t nil)
 
-(autoload 'el-get-make-recipes "el-get" "\
+(autoload 'el-get-make-recipes "el-get/el-get" "\
 Loop over `el-get-sources' and write a recipe file for each
 entry which is not a symbol and is not already a known recipe.
 
 \(fn &optional DIR)" t nil)
 
-(autoload 'el-get-checksum "el-get" "\
+(autoload 'el-get-checksum "el-get/el-get" "\
 Compute the checksum of the given package, and put it in the kill-ring
 
 \(fn PACKAGE &optional PACKAGE-STATUS-ALIST)" t nil)
 
 ;;;***
 
-;;;### (autoloads (el-get-list-packages) "el-get-list-packages" "el-get/el-get-list-packages.el"
-;;;;;;  (21541 26313))
+;;;### (autoloads (el-get-list-packages) "el-get/el-get-list-packages"
+;;;;;;  "el-get/el-get-list-packages.el" (21575 46894 438791 651000))
 ;;; Generated autoloads from el-get/el-get-list-packages.el
 
-(autoload 'el-get-list-packages "el-get-list-packages" "\
+(autoload 'el-get-list-packages "el-get/el-get-list-packages" "\
 Display a list of packages.
 
 \(fn)" t nil)
@@ -104,10 +109,11 @@ Display a list of packages.
 ;;;***
 
 ;;;### (autoloads (flymake-find-file-hook flymake-mode-off flymake-mode-on
-;;;;;;  flymake-mode) "flymake" "flymake/flymake.el" (21546 29468))
+;;;;;;  flymake-mode) "flymake/flymake" "flymake/flymake.el" (21575
+;;;;;;  46899 150886 152000))
 ;;; Generated autoloads from flymake/flymake.el
 
-(autoload 'flymake-mode "flymake" "\
+(autoload 'flymake-mode "flymake/flymake" "\
 Toggle on-the-fly syntax checking.
 With a prefix argument ARG, enable the mode if ARG is positive,
 and disable it otherwise.  If called from Lisp, enable the mode
@@ -115,18 +121,18 @@ if ARG is omitted or nil.
 
 \(fn &optional ARG)" t nil)
 
-(autoload 'flymake-mode-on "flymake" "\
+(autoload 'flymake-mode-on "flymake/flymake" "\
 Turn flymake mode on.
 
 \(fn)" nil nil)
 
-(autoload 'flymake-mode-off "flymake" "\
+(autoload 'flymake-mode-off "flymake/flymake" "\
 Turn flymake mode off.
 
 \(fn)" nil nil)
 
-(autoload 'flymake-find-file-hook "flymake" "\
-Not documented
+(autoload 'flymake-find-file-hook "flymake/flymake" "\
+
 
 \(fn)" nil nil)
 
@@ -135,10 +141,10 @@ Not documented
 ;;;### (autoloads (jedi:install-server-block jedi:install-server
 ;;;;;;  jedi:setup anything-jedi-related-names helm-jedi-related-names
 ;;;;;;  jedi:ac-setup jedi:complete jedi:start-dedicated-server)
-;;;;;;  "jedi" "jedi/jedi.el" (21541 26866))
+;;;;;;  "jedi/jedi" "jedi/jedi.el" (21575 46903 758978 568000))
 ;;; Generated autoloads from jedi/jedi.el
 
-(autoload 'jedi:start-dedicated-server "jedi" "\
+(autoload 'jedi:start-dedicated-server "jedi/jedi" "\
 Start Jedi server dedicated to this buffer.
 This is useful, for example, when you want to use different
 `sys.path' for some buffer.  When invoked as an interactive
@@ -152,12 +158,12 @@ See also: `jedi:server-args'.
 
 \(fn COMMAND)" t nil)
 
-(autoload 'jedi:complete "jedi" "\
+(autoload 'jedi:complete "jedi/jedi" "\
 Complete code at point.
 
-\(fn &key (EXPAND ac-expand-on-auto-complete))" t nil)
+\(fn &key (expand ac-expand-on-auto-complete))" t nil)
 
-(autoload 'jedi:ac-setup "jedi" "\
+(autoload 'jedi:ac-setup "jedi/jedi" "\
 Add Jedi AC sources to `ac-sources'.
 
 If auto-completion is all you need, you can call this function instead
@@ -171,17 +177,17 @@ in their Emacs configuration.
 
 \(fn)" t nil)
 
-(autoload 'helm-jedi-related-names "jedi" "\
+(autoload 'helm-jedi-related-names "jedi/jedi" "\
 Find related names of the object at point using `helm' interface.
 
 \(fn)" t nil)
 
-(autoload 'anything-jedi-related-names "jedi" "\
+(autoload 'anything-jedi-related-names "jedi/jedi" "\
 Find related names of the object at point using `anything' interface.
 
 \(fn)" t nil)
 
-(autoload 'jedi:setup "jedi" "\
+(autoload 'jedi:setup "jedi/jedi" "\
 Fully setup jedi.el for current buffer.
 It setups `ac-sources' (calls `jedi:ac-setup') and turns
 `jedi-mode' on.
@@ -196,7 +202,7 @@ what jedi can do.
 
 \(fn)" t nil)
 
-(autoload 'jedi:install-server "jedi" "\
+(autoload 'jedi:install-server "jedi/jedi" "\
 This command installs Jedi server script jediepcserver.py in a
 Python environment dedicated to Emacs.  By default, the
 environment is at ``~/.emacs.d/.python-environments/default/``.
@@ -238,7 +244,7 @@ See also:
 
 \(fn)" t nil)
 
-(autoload 'jedi:install-server-block "jedi" "\
+(autoload 'jedi:install-server-block "jedi/jedi" "\
 Blocking version `jedi:install-server'.
 
 \(fn)" nil nil)
@@ -246,11 +252,11 @@ Blocking version `jedi:install-server'.
 ;;;***
 
 ;;;### (autoloads (pymacs-apply pymacs-call pymacs-exec pymacs-eval
-;;;;;;  pymacs-autoload pymacs-load) "pymacs" "pymacs/pymacs.el"
-;;;;;;  (21595 41597))
+;;;;;;  pymacs-autoload pymacs-load) "pymacs/pymacs" "pymacs/pymacs.el"
+;;;;;;  (21595 41774 473373 0))
 ;;; Generated autoloads from pymacs/pymacs.el
 
-(autoload 'pymacs-load "pymacs" "\
+(autoload 'pymacs-load "pymacs/pymacs" "\
 Import the Python module named MODULE into Emacs.
 Each function in the Python module is made available as an Emacs function.
 The Lisp name of each function is the concatenation of PREFIX with
@@ -260,7 +266,7 @@ If NOERROR is not nil, do not raise error when the module is not found.
 
 \(fn MODULE &optional PREFIX NOERROR)" t nil)
 
-(autoload 'pymacs-autoload "pymacs" "\
+(autoload 'pymacs-autoload "pymacs/pymacs" "\
 Pymacs's equivalent of the standard emacs facility `autoload'.
 Define FUNCTION to autoload from Python MODULE using PREFIX.
 If PREFIX is not given, it defaults to MODULE followed by a dash.
@@ -271,18 +277,18 @@ which is the default.
 
 \(fn FUNCTION MODULE &optional PREFIX DOCSTRING INTERACTIVE)" nil nil)
 
-(autoload 'pymacs-eval "pymacs" "\
+(autoload 'pymacs-eval "pymacs/pymacs" "\
 Compile TEXT as a Python expression, and return its value.
 
 \(fn TEXT)" t nil)
 
-(autoload 'pymacs-exec "pymacs" "\
+(autoload 'pymacs-exec "pymacs/pymacs" "\
 Compile and execute TEXT as a sequence of Python statements.
 This functionality is experimental, and does not appear to be useful.
 
 \(fn TEXT)" t nil)
 
-(autoload 'pymacs-call "pymacs" "\
+(autoload 'pymacs-call "pymacs/pymacs" "\
 Return the result of calling a Python function FUNCTION over ARGUMENTS.
 FUNCTION is a string denoting the Python function, ARGUMENTS are separate
 Lisp expressions, one per argument.  Immutable Lisp constants are converted
@@ -290,7 +296,7 @@ to Python equivalents, other structures are converted into Lisp handles.
 
 \(fn FUNCTION &rest ARGUMENTS)" nil nil)
 
-(autoload 'pymacs-apply "pymacs" "\
+(autoload 'pymacs-apply "pymacs/pymacs" "\
 Return the result of calling a Python function FUNCTION over ARGUMENTS.
 FUNCTION is a string denoting the Python function, ARGUMENTS is a list of
 Lisp expressions.  Immutable Lisp constants are converted to Python
