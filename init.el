@@ -1,127 +1,11 @@
-(add-to-list 'load-path "~/.emacs.d")
+(add-to-list 'load-path "~/.emacs.d/lisp")
 
-; sorting directories before files in dired
-(require 'ls-lisp)
-(setq ls-lisp-use-insert-directory-program t)
-(setq insert-directory-program "/bin/ls")
-(require 'dired-sort-map)
-(setq dired-listing-switches "--group-directories-first -alh")
-
-; don't ask confirmation on delete
-(setq dired-recursive-deletes 'always)
-
-; toggle from vertical to horizon split and back
-(require 'toggle-window-split)
-(global-set-key (kbd "C-x |") 'toggle-window-split)
-
-; recent files support
-(require 'recentf)
-(recentf-mode 1)
-(setq recentf-max-menu-items 25)
-
-; don't show hidden files
-(require 'dired-x)
-(setq-default dired-omit-files-p t)
-(setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
-(global-set-key (kbd "M-o") 'dired-omit-mode)
-
-; convenient windows navigation
-(global-set-key (kbd "C-x <up>") '(lambda () (interactive) (other-window -1)) )
-(global-set-key (kbd "C-x <down>") 'other-window)
-(global-set-key (kbd "M-S-<left>") 'shrink-window-horizontally)
-(global-set-key (kbd "M-S-<right>") 'enlarge-window-horizontally)
-(global-set-key (kbd "M-S-<down>") 'shrink-window)
-(global-set-key (kbd "M-S-<up>") 'enlarge-window)
-
-; convenient tail mode
-(global-set-key (kbd "M-u") 'auto-revert-tail-mode)
-
-; windows swap
-(require 'buffer-move)
-
-; different code edit features
-; (load-file "~/.emacs.d/cedet-1.1/common/cedet.el")
-; (global-ede-mode 1)                      ; Enable the Project management system
-; (semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion 
-; (global-srecode-minor-mode 1)            ; Enable template insertion menu
-
-; files treeview
-(require 'sr-speedbar)
-;(sr-speedbar-open)
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(speedbar-show-unknown-files t)
- '(sr-speedbar-right-side nil)
- '(sr-speedbar-width-console 32)
- '(sr-speedbar-width-x 32)
- '(sr-speedbar-skip-other-window-p t)
- '(sr-speedbar-delete-windows nil)
- '(sr-speedbar-auto-refresh nil))
-(global-set-key "\C-o" '(lambda () (interactive) (sr-speedbar-toggle) ) )
-
-(require 'ace-jump-mode)
-(global-set-key (kbd "C-c SPC") 'ace-jump-mode)
-
-; line numbers
-(require 'linum)
-(global-linum-mode 1)
-
-; show only files in buffer list
-;(require 'buff-menu+)
-
-; window numbers
-(require 'window-number)
-(window-number-mode)
-(window-number-meta-mode)
-
-; single buffer for dired
-(require 'dired+)
-
-; working grep searh
-(require 'ack)
-(require 'igrep)
-;(require 'grep+)
-;(grep-apply-setting 'grep-find-command "find . ! -name \"*~\" ! -name \"#*#\" -type f -print0 | xargs -0 -e grep -nH -e ")
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
-
-; alternative treeview
-(require 'tree-mode)
-(require 'windata)
-(require 'dirtree)
-(autoload 'dirtree "dirtree" "Add directory to tree view" t)
-
-; midnight commander mode
-(require 'mc)
-
-; paste previous from buffer
-(global-set-key (kbd "C-M-y") '(lambda () (interactive) (yank 2)) )
-
-; delete selection mode
-(cua-selection-mode 1)
-
-; scrolling without moving the point
-;(global-unset-key (kbd "C-o"))
-(global-set-key (kbd "C-<next>") '(lambda () (interactive) (scroll-up 1)) )
-(global-set-key (kbd "C-<prior>") '(lambda () (interactive) (scroll-down 1)) )
-(global-set-key (kbd "C-M-<prior>") '(lambda () (interactive) (scroll-other-window-down 1)) )
-(global-set-key (kbd "C-M-<next>") '(lambda () (interactive) (scroll-other-window 1)) )
-
-; python mode
-(require 'cl-lib)
-
-(load "package")
-(require 'package)
+;; REPOSITORIES
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
 			 ("melpa" . "http://melpa.milkbox.net/packages/")))
+(setq package-enable-at-startup nil)
+(package-initialize)
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil 'noerror)
@@ -132,102 +16,141 @@
       (eval-print-last-sexp))))
 (el-get 'sync)
 
-(add-hook 'python-mode-hook '(lambda () (define-key python-mode-map "\C-m" 'newline-and-indent)))
+;; DIRED
+; sorting directories before files in dired
+(setq ls-lisp-use-insert-directory-program t)
+(setq insert-directory-program "/bin/ls")
 
-(global-set-key (kbd "C-\\") 'auto-complete)
-(global-auto-complete-mode t)
-;(add-hook 'python-mode-hook 'auto-complete-mode)
-;(add-hook 'python-mode-hook 'jedi:ac-setup)
+(require 'dired-sort-map)
+(setq dired-listing-switches "--group-directories-first -alh")
 
-;(add-hook 'after-init-hook #'global-flycheck-mode)
-(require 'autopair)
-(autopair-global-mode)
+; don't show hidden files
+(require 'dired-x)
+(setq-default dired-omit-files-p t)
+(setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
+(global-set-key (kbd "M-.") 'dired-omit-mode)
 
-;(setq-default py-shell-name "ipython")
-;(setq-default py-which-bufname "IPython")
+; don't ask confirmation on delete
+(setq dired-recursive-deletes 'always)
 
-;(push "~/.virtualenvs/default/bin" exec-path)
-;(setenv "PATH" (concat "~/.virtualenvs/default/bin" ":" (getenv "PATH") ))
+;; WINDOWS MANAGEMENT
+; toggle from vertical to horizontal split and back
+(require 'toggle-window-split)
+(global-set-key (kbd "C-x |") 'toggle-window-split)
 
-(require 'pymacs)
-;(autoload 'pymacs-apply "pymacs")
-;(autoload 'pymacs-call "pymacs")
-;(autoload 'pymacs-eval "pymacs" nil t)
-;(autoload 'pymacs-exec "pymacs" nil t)
-;(autoload 'pymacs-load "pymacs" nil t)
-;(autoload 'pymacs-autoload "pymacs")
-(pymacs-load "ropemacs" "rope-")
+; windows navigation
+(global-set-key (kbd "C-x <up>") '(lambda () (interactive) (other-window -1)) )
+(global-set-key (kbd "C-x <down>") 'other-window)
+(global-set-key (kbd "M-S-<left>") 'shrink-window-horizontally)
+(global-set-key (kbd "M-S-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "M-S-<down>") 'shrink-window)
+(global-set-key (kbd "M-S-<up>") 'enlarge-window)
 
-(setq ropemacs-enable-autoimport 't)
-(setq ropemacs-autoimport-modules '("os" "random" "math" "shutil" "sys") )
-;(rope-generate-autoimport-cache)
+; windows swap
+(global-set-key (kbd "C-x <C-up>")     'buf-move-up)
+(global-set-key (kbd "C-x <C-down>")   'buf-move-down)
+(global-set-key (kbd "C-x <C-left>")   'buf-move-left)
+(global-set-key (kbd "C-x <C-right>")  'buf-move-right)
 
-; code autocheck
-(when (load "flymake" t)
- (defun flymake-pylint-init ()
-   (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
-          (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
-         (list "pep8" (list "--repeat" local-file "--max-line-length=180"))))
+; window numbers
+(require 'window-number)
+(window-number-mode)
+(window-number-meta-mode)
 
- (add-to-list 'flymake-allowed-file-name-masks '("\\.py\\'" flymake-pylint-init)))
-(add-hook 'find-file-hook 'flymake-find-file-hook)
+; go to full screen mode
+(defun toggle-maximize-buffer () "Maximize buffer"
+       (interactive)
+       (if (= 1 (length (window-list)))
+           (jump-to-register '_)
+         (progn
+           (window-configuration-to-register '_)
+           (delete-other-windows))))
+(global-set-key (kbd "C-x 1") 'toggle-maximize-buffer)
 
-(defun my-flymake-show-help ()
-  (when (get-char-property (point) 'flymake-overlay)
-    (let ((help (get-char-property (point) 'help-echo)))
-      (if help (message "%s" help)))))
-
-(add-hook 'post-command-hook 'my-flymake-show-help)
-
-; comment region
-(defun comment-dwim-line (&optional arg)
-    (interactive "*P")
-    (comment-normalize-vars)
-    (if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
-        (comment-or-uncomment-region (line-beginning-position) (line-end-position))
-      (comment-dwim arg)))
-
-(global-set-key (kbd "M-;") 'comment-region)
-(global-set-key (kbd "M-;") 'comment-dwim-line)
-
-; highlight paranthesis
-(require 'highlight-parentheses)
-(define-globalized-minor-mode global-highlight-parentheses-mode
-  highlight-parentheses-mode
-  (lambda ()
-    (highlight-parentheses-mode t)))
-(global-highlight-parentheses-mode t)
-
-(add-hook 'emacs-lisp-mode-hook
-          '(lambda ()
-             (highlight-parentheses-mode)
-             (setq autopair-handle-action-fns
-                   (list 'autopair-default-handle-action
-                         '(lambda (action pair pos-before)
-                            (hl-paren-color-update))))))
-
-; protobuf mode
-(require 'protobuf-mode)
-
-; easy switch between buffers
-(require 'ido)
-(ido-mode 'buffers) ;; only use this line to turn off ido for file names!
-(setq ido-ignore-buffers '("^ " "*Completions*" "*Shell Command Output*"
-               "*Messages*" "Async Shell Command"))
+; workgroups
+(setq wg-prefix-key (kbd "C-x w"))
+(global-set-key (kbd "C-c C-<left>") 'wg-switch-to-workgroup-left)
+(global-set-key (kbd "C-c C-<right>") 'wg-switch-to-workgroup-right)
+(workgroups-mode 1)
 
 ; save and restore session
 (desktop-save-mode 1)
 (winner-mode 1)
 
-; go to full screen mode
-(defun toggle-maximize-buffer () "Maximize buffer"
-  (interactive)
-  (if (= 1 (length (window-list)))
-      (jump-to-register '_) 
-    (progn
-      (window-configuration-to-register '_)
-      (delete-other-windows))))
-(global-set-key (kbd "C-f") 'toggle-maximize-buffer)
+;; NAVIGATION
+
+; recent files support
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
+
+; convenient navigation
+(require 'ace-jump-mode)
+(global-set-key (kbd "C-c SPC") 'ace-jump-mode)
+
+; buffer list on C-x b
+(require 'ido)
+(ido-mode t)
+
+; line numbers
+(global-linum-mode 1)
+(setq linum-format (lambda (line) (propertize (format (let ((w (length (number-to-string (count-lines (point-min) (point-max)))))) (concat "%" (number-to-string w) "d ")) line) 'face 'linum)))
+
+; working grep search
+(custom-set-faces)
+(global-set-key (kbd "M-g r") 'igrep)
+
+; scrolling without moving the point
+(global-set-key (kbd "C-<next>") '(lambda () (interactive) (scroll-up 1)) )
+(global-set-key (kbd "C-<prior>") '(lambda () (interactive) (scroll-down 1)) )
+(global-set-key (kbd "C-M-<prior>") '(lambda () (interactive) (scroll-other-window-down 1)) )
+(global-set-key (kbd "C-M-<next>") '(lambda () (interactive) (scroll-other-window 1)) )
+
+; column-number-mode
+(column-number-mode)
+
+; go to file under cursor
+(global-set-key (kbd "C-M-f") 'ffap)
+
+; convenient buffer processing
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(setq ibuffer-expert t)
+
+; fast file reload
+(global-set-key (kbd "C-x f") (quote revert-buffer))
+
+; treeview mode
+(defun ad-advised-definition-p (definition)
+  "Return non-nil if DEFINITION was generated from advice information."
+  (if (or (ad-lambda-p definition)
+	  (macrop definition)
+	  (ad-compiled-p definition))
+      (let ((docstring (ad-docstring definition)))
+	(and (stringp docstring)
+	          (get-text-property 0 'dynamic-docstring-function docstring)))))
+
+(require 'sr-speedbar)
+(custom-set-variables
+'(speedbar-show-unknown-files t)
+'(sr-speedbar-right-side nil)
+'(sr-speedbar-width-console 32)
+'(sr-speedbar-width-x 32)
+'(sr-speedbar-skip-other-window-p t)
+'(sr-speedbar-delete-windows nil)
+'(sr-speedbar-auto-refresh nil))
+(global-set-key "\C-o" '(lambda () (interactive) (sr-speedbar-toggle) ) )
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+
+;; EDIT
+
+; paste previous from buffer
+(global-set-key (kbd "C-M-y") '(lambda () (interactive) (yank 2)) )
+
+; delete selection mode
+(cua-selection-mode 1)
+
+; tail mode
+(global-set-key (kbd "M-u") 'auto-revert-tail-mode)
 
 ; move lines
 (require 'drag-stuff)
@@ -255,22 +178,9 @@
         (setq end (point)))
       (goto-char (+ origin (* (length region) arg) arg)))))
 
-(global-set-key (kbd "C-D") 'duplicate-current-line-or-region)
-
-; switch to new window automatically
-(defadvice split-window (after move-point-to-new-window activate)
-  "Moves the point to the newly created window after splitting."
-  (other-window 1))
-
-; column-number-mode
-(column-number-mode)
-
-; go to file under cursor
-(global-set-key (kbd "C-b") 'ffap)
-(global-set-key (kbd "C-M-b") 'rope-auto-import)
+(global-set-key (kbd "C-d") 'duplicate-current-line-or-region)
 
 ; rectange mark
-(require 'rect-mark)
 (global-set-key (kbd "C-x r SPC") 'rm-set-mark)
 (global-set-key (kbd "C-x r C-x") 'rm-exchange-point-and-mark)
 (global-set-key (kbd "C-x r C-w") 'rm-kill-region)
@@ -284,34 +194,43 @@
 (autoload 'rm-kill-ring-save "rect-mark"
   "Copy a rectangular region to the kill ring." t)
 
+; copying
+(require 'copy)
+
+; unified remove text scheme
+(global-set-key (kbd "<C-delete>") '(lambda () (interactive) (kill-line 0)) )
+(global-set-key (kbd "<C-M-delete>") (quote backward-kill-sexp) )
+(global-set-key (kbd "<M-delete>") (quote backward-kill-word) )
+
+(global-set-key (kbd "M-k") 'kill-word )
+(global-set-key (kbd "<C-S-delete>") 'kill-whole-line)
+
+(defun backwards-zap-to-char (char)
+  (interactive "cZap backwards to char: ")
+  (zap-to-char -1 char))
+(global-set-key (kbd "C-M-z") 'backwards-zap-to-char)
+
+; fasy copying
+(global-set-key (kbd "C-c w") (quote copy-word))
+(global-set-key (kbd "C-c l") (quote copy-line))
+(global-set-key (kbd "C-c p") (quote copy-paragraph))
+(global-set-key (kbd "C-c s") (quote thing-copy-string-to-mark))
+(global-set-key (kbd "C-c b") (quote thing-copy-parenthesis-to-mark))
+
+;; CODING
+(if (not (display-graphic-p))
+    (require 'init-coding))    
+
+;; DIFFERENT
+
 ; backup to one directory
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-; restore windows layout
-(require 'workgroups)
-(setq wg-prefix-key (kbd "C-x w"))
-(setq wg-morph-on nil)
-(workgroups-mode 1)
-(let ((wg-file (concat temporary-file-directory "workgroup")))
-  (if (not (file-exists-p wg-file))
-      (write-file wg-file))
-  (wg-load (concat temporary-file-directory "workgroup")))
-(add-hook 'kill-emacs-hook 'wg-update-all-workgroups-and-save)
-(global-set-key (kbd "C-x w <left>") 'wg-switch-left)
-(global-set-key (kbd "C-x w <right>") 'wg-switch-right)
-
-; convenient copying
-(require 'copy)
-
 ; quick yes-no
 (require 'quick-yes)
-
-(global-set-key (kbd "<C-delete>") '(lambda () (interactive) (kill-line 0)) )
-(global-set-key (kbd "<C-M-delete>") (quote backward-kill-sexp) )
-(global-set-key (kbd "<M-delete>") (quote backward-kill-word) )
 
 ; statistics
 (defun word-count-analysis (start end)
@@ -331,26 +250,5 @@
       (message "%S" words))
     words))
 
-; convenient buffer processing
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(setq ibuffer-expert t)
-
-; kill to the end of line
-(global-set-key (kbd "M-k") 'kill-word )
-(global-set-key (kbd "<C-S-delete>") 'kill-whole-line)
-
-; kill to the previous symbol
-(defun backwards-zap-to-char (char)
-  (interactive "cZap backwards to char: ")
-  (zap-to-char -1 char))
-
-(global-set-key (kbd "C-M-z") 'backwards-zap-to-char)
-
-; fast file reload
-(global-set-key (kbd "C-x f") (quote revert-buffer))
-
-(global-set-key (kbd "C-c w") (quote copy-word))
-(global-set-key (kbd "C-c l") (quote copy-line))
-(global-set-key (kbd "C-c p") (quote copy-paragraph))
-(global-set-key (kbd "C-c s") (quote thing-copy-string-to-mark))
-(global-set-key (kbd "C-c b") (quote thing-copy-parenthesis-to-mark))
+; emacsclient -nw support
+(server-start)
