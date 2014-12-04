@@ -61,9 +61,12 @@
 (defun toggle-maximize-buffer () "Maximize buffer"
        (interactive)
        (if (= 1 (length (window-list)))
-           (jump-to-register '_)
          (progn
-           (window-configuration-to-register '_)
+           (point-to-register '2)
+           (jump-to-register '1)
+           (jump-to-register '2))
+         (progn
+           (window-configuration-to-register '1)
            (delete-other-windows))))
 (global-set-key (kbd "C-x 1") 'toggle-maximize-buffer)
 
@@ -85,7 +88,7 @@
 
 ; convenient navigation
 (require 'ace-jump-mode)
-(global-set-key (kbd "C-c SPC") 'ace-jump-mode)
+(global-set-key (kbd "M-j") 'ace-jump-mode)
 
 ; buffer list on C-x b
 (require 'ido)
