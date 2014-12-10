@@ -95,11 +95,10 @@
 (ido-mode t)
 
 ; line numbers
-(global-linum-mode 1)
+(add-hook 'find-file-hook (lambda () (linum-mode 1)))
 (setq linum-format (lambda (line) (propertize (format (let ((w (length (number-to-string (count-lines (point-min) (point-max)))))) (concat "%" (number-to-string w) "d ")) line) 'face 'linum)))
 
 ; working grep search
-(custom-set-faces)
 (global-set-key (kbd "M-g r") 'igrep)
 
 ; scrolling without moving the point
@@ -119,7 +118,10 @@
 (setq ibuffer-expert t)
 
 ; fast file reload
-(global-set-key (kbd "C-x f") (quote revert-buffer))
+(defun revert-buffer-no-confirm ()
+  "Revert buffer without confirmation."
+      (interactive) (revert-buffer t t))
+(global-set-key (kbd "C-x f") (quote revert-buffer-no-confirm))
 
 ; treeview mode
 (defun ad-advised-definition-p (definition)
@@ -132,14 +134,6 @@
 	          (get-text-property 0 'dynamic-docstring-function docstring)))))
 
 (require 'sr-speedbar)
-(custom-set-variables
-'(speedbar-show-unknown-files t)
-'(sr-speedbar-right-side nil)
-'(sr-speedbar-width-console 32)
-'(sr-speedbar-width-x 32)
-'(sr-speedbar-skip-other-window-p t)
-'(sr-speedbar-delete-windows nil)
-'(sr-speedbar-auto-refresh nil))
 (global-set-key "\C-o" '(lambda () (interactive) (sr-speedbar-toggle) ) )
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
@@ -220,9 +214,59 @@
 (global-set-key (kbd "C-c s") (quote thing-copy-string-to-mark))
 (global-set-key (kbd "C-c b") (quote thing-copy-parenthesis-to-mark))
 
+; uncompressing
+(defun uncompress-xml ()
+  (interactive)
+  (beginning-of-buffer)
+  (replace-regexp "><" ">\n<")
+  (mark-whole-buffer)
+  (indent-region 0 most-positive-fixnum)
+)
+
 ;; CODING
 (if (not (display-graphic-p))
-    (require 'init-coding))    
+      (require 'init-coding))
+
+;; DESIGN
+(if (display-graphic-p)
+    (progn 
+      (global-visual-line-mode 1)
+      (custom-set-faces
+       ;; custom-set-faces was added by Custom.
+       ;; If you edit it by hand, you could mess it up, so be careful.
+       ;; Your init file should contain only one such instance.
+       ;; If there is more than one, they won't work right.
+       '(window-number-face ((t (:background "darkgray" :foreground "black"))) t))
+      ))
+
+; custom columns width for ibuffer
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ibuffer-formats
+   (quote
+    ((mark modified read-only " "
+	   (name 25 25 :left :elide)
+	   " "
+	   (size 9 -1 :right)
+	   " "
+	   (mode 16 16 :left :elide)
+	   " " filename-and-process)
+     (mark " "
+	   (name 16 -1)
+	   " " filename))))
+ '(speedbar-show-unknown-files t)
+ '(sr-speedbar-auto-refresh nil)
+ '(sr-speedbar-delete-windows nil)
+ '(sr-speedbar-right-side nil)
+ '(sr-speedbar-skip-other-window-p t)
+ '(sr-speedbar-width-console 32)
+ '(sr-speedbar-width-x 32))
+
+; highlight lines in dired
+(add-hook 'dired-mode-hook '(lambda () (hl-line-mode t)))
 
 ;; DIFFERENT
 
@@ -231,6 +275,9 @@
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
+
+; light mode for big files
+(require 'vlf-integrate)
 
 ; quick yes-no
 (require 'quick-yes)
@@ -253,5 +300,9 @@
       (message "%S" words))
     words))
 
-; emacsclient -nw support
-(server-start)
+; "emacsclient -nw" support
+(defun is-server-running ()
+  (and (boundp 'server-process)
+       (memq (process-status server-process) '(connect listen open run))))
+(if (is-server-running)
+    (server-start))
