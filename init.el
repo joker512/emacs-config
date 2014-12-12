@@ -135,8 +135,6 @@
 
 (require 'sr-speedbar)
 (global-set-key "\C-o" '(lambda () (interactive) (sr-speedbar-toggle) ) )
-(put 'downcase-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
 
 ;; EDIT
 
@@ -267,7 +265,7 @@
  '(sr-speedbar-width-x 32))
 
 ; highlight lines in dired
-(add-hook 'dired-mode-hook '(lambda () (hl-line-mode t)))
+(add-hook 'dired-mode-hook '(lambda () (interactive) (hl-line-mode t)))
 
 ;; DIFFERENT
 

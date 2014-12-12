@@ -390,7 +390,8 @@ of a speedbar-window.  It will be created if necessary."
           (sr-speedbar-handle-auto-refresh sr-speedbar-auto-refresh))
         (set-window-buffer sr-speedbar-window (get-buffer sr-speedbar-buffer-name))
         (set-window-dedicated-p sr-speedbar-window t) ;make `sr-speedbar-window' dedicated to speedbar-buffer.
-        (select-window current-window))
+        (select-window current-window)
+        (hl-line-mode t))
     (message "`sr-speedbar' window has exist.")))
 
 (defun sr-speedbar-close ()
@@ -411,7 +412,8 @@ of a speedbar-window.  It will be created if necessary."
           ;; Otherwise delete dedicated window.
           (delete-window sr-speedbar-window)
           (if (sr-speedbar-window-exist-p current-window)
-              (select-window current-window))))
+              (select-window current-window)))
+        (setq sr-window nil))
     (message "`sr-speedbar' window is not exist.")))
 
 (defun sr-speedbar-select-window ()
@@ -474,12 +476,15 @@ Otherwise return nil."
   "Get `sr-speedbar' window."
   (let ((current-window (selected-window))
         ;; Get split new window.
-        (new-window (split-window
+	 (new-window
+	   (if (<= (window-body-width) sr-speedbar-width)
+	       current-window
+	       (split-window
                      (selected-window)
                      (if sr-speedbar-right-side
                          (- (sr-speedbar-current-window-take-width) sr-speedbar-width)
                        sr-speedbar-width)
-                     t)))
+                     t))))
     ;; Select split window.
     (setq sr-speedbar-window
           (if sr-speedbar-right-side
