@@ -88,7 +88,13 @@
 
 ; convenient navigation
 (require 'ace-jump-mode)
-(global-set-key (kbd "M-j") 'ace-jump-mode)
+(global-set-key (kbd "M-j") 'ace-jump-char-mode)
+(global-set-key (kbd "M-l") 'ace-jump-word-mode)
+(global-set-key (kbd "M-u") 'ace-jump-mode-pop-mark)
+
+; backward-forward paragraph
+(global-set-key (kbd "C-M-p") 'backward-paragraph)
+(global-set-key (kbd "C-M-n") 'forward-paragraph)
 
 ; buffer list on C-x b
 (require 'ido)
@@ -97,6 +103,7 @@
 ; line numbers
 (add-hook 'find-file-hook (lambda () (linum-mode 1)))
 (setq linum-format (lambda (line) (propertize (format (let ((w (length (number-to-string (count-lines (point-min) (point-max)))))) (concat "%" (number-to-string w) "d ")) line) 'face 'linum)))
+(global-set-key (kbd "C-c L") 'linum-mode)
 
 ; working grep search
 (global-set-key (kbd "M-g r") 'igrep)
@@ -111,7 +118,7 @@
 (column-number-mode)
 
 ; go to file under cursor
-(global-set-key (kbd "C-M-f") 'ffap)
+(global-set-key (kbd "C-c f") 'ffap)
 
 ; convenient buffer processing
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -138,20 +145,22 @@
 
 ;; EDIT
 
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+
 ; paste previous from buffer
 (global-set-key (kbd "C-M-y") '(lambda () (interactive) (yank 2)) )
 
 ; delete selection mode
 (cua-selection-mode 1)
 
-; tail mode
-(global-set-key (kbd "M-u") 'auto-revert-tail-mode)
-
 ; move lines
 (require 'drag-stuff)
 (drag-stuff-global-mode)
 (global-set-key (kbd "M-<right>") 'forward-whitespace)
+(global-set-key (kbd "C-M-f") 'forward-whitespace)
 (global-set-key (kbd "M-<left>") '(lambda () (interactive) (forward-whitespace -1)) )
+(global-set-key (kbd "C-M-b") '(lambda () (interactive) (forward-whitespace -1)) )
 
 ; duplicate line or region
 (defun duplicate-current-line-or-region (arg)
@@ -173,7 +182,7 @@
         (setq end (point)))
       (goto-char (+ origin (* (length region) arg) arg)))))
 
-(global-set-key (kbd "C-d") 'duplicate-current-line-or-region)
+(global-set-key (kbd "C-M-d") 'duplicate-current-line-or-region)
 
 ; rectange mark
 (global-set-key (kbd "C-x r SPC") 'rm-set-mark)
@@ -197,7 +206,7 @@
 (global-set-key (kbd "<C-M-delete>") (quote backward-kill-sexp) )
 (global-set-key (kbd "<M-delete>") (quote backward-kill-word) )
 
-(global-set-key (kbd "M-k") 'kill-word )
+(global-set-key (kbd "M-k") 'kill-whole-line)
 (global-set-key (kbd "<C-S-delete>") 'kill-whole-line)
 
 (defun backwards-zap-to-char (char)
@@ -220,6 +229,30 @@
   (mark-whole-buffer)
   (indent-region 0 most-positive-fixnum)
 )
+
+; increment number
+(defun increment-number-decimal (&optional arg)
+  "Increment the number forward from point by 'arg'."
+  (interactive "p*")
+  (save-excursion
+    (save-match-data
+      (let (inc-by field-width answer)
+        (setq inc-by (if arg arg 1))
+        (skip-chars-backward "0123456789")
+        (when (re-search-forward "[0-9]+" nil t)
+          (setq field-width (- (match-end 0) (match-beginning 0)))
+          (setq answer (+ (string-to-number (match-string 0) 10) inc-by))
+          (when (< answer 0)
+            (setq answer (+ (expt 10 field-width) answer)))
+          (replace-match (format (concat "%0" (int-to-string field-width) "d")
+                                 answer)))))))
+
+(defun decrement-number-decimal (&optional arg)
+  (interactive "p*")
+    (my-increment-number-decimal (if arg (- arg) -1)))
+
+(global-set-key (kbd "C-c +") 'increment-number-decimal)
+(global-set-key (kbd "C-c -") 'decrement-number-decimal)
 
 ;; CODING
 (if (not (display-graphic-p))
@@ -301,6 +334,9 @@
     (when (interactive-p)
       (message "%S" words))
     words))
+
+; fixes for eshell
+;; (require 'eshell)
 
 ; "emacsclient -nw" support
 (defun is-server-running ()

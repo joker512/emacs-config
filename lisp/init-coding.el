@@ -26,6 +26,10 @@
     (let ((help (get-char-property (point) 'help-echo)))
       (if help (message "%s" help)))))
 
+(custom-set-faces
+  '(flymake-errline ((((class color)) (:background "White"))))
+)
+
 (add-hook 'post-command-hook 'my-flymake-show-help)
 
 ; commenting
