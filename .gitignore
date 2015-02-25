@@ -5,6 +5,7 @@ ac-comphist.dat
 tramp
 cedet*
 .python-environments
+.directory
 ido.last*
 .\#*
 \#*\#

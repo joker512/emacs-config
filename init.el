@@ -84,6 +84,10 @@
 
 ;; NAVIGATION
 
+; buffer switch
+(global-set-key (kbd "C-x n") 'next-buffer)
+(global-set-key (kbd "C-x p") 'previous-buffer)
+
 ; recent files support
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
@@ -251,7 +255,7 @@
 
 (defun decrement-number-decimal (&optional arg)
   (interactive "p*")
-    (my-increment-number-decimal (if arg (- arg) -1)))
+    (increment-number-decimal (if arg (- arg) -1)))
 
 (global-set-key (kbd "C-c +") 'increment-number-decimal)
 (global-set-key (kbd "C-c -") 'decrement-number-decimal)
