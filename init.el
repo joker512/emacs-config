@@ -73,7 +73,9 @@
 ; workgroups
 (setq wg-prefix-key (kbd "C-x w"))
 (global-set-key (kbd "C-c C-<left>") 'wg-switch-to-workgroup-left)
+(global-set-key (kbd "C-c p") 'wg-switch-to-workgroup-left)
 (global-set-key (kbd "C-c C-<right>") 'wg-switch-to-workgroup-right)
+(global-set-key (kbd "C-c n") 'wg-switch-to-workgroup-right)
 (workgroups-mode 1)
 
 ; save and restore session
@@ -88,8 +90,8 @@
 
 ; convenient navigation
 (require 'ace-jump-mode)
-(global-set-key (kbd "M-j") 'ace-jump-char-mode)
-(global-set-key (kbd "M-l") 'ace-jump-word-mode)
+(global-set-key (kbd "M-h") 'ace-jump-char-mode)
+(global-set-key (kbd "M-j") 'ace-jump-word-mode)
 (global-set-key (kbd "M-u") 'ace-jump-mode-pop-mark)
 
 ; backward-forward paragraph
@@ -141,7 +143,7 @@
 	          (get-text-property 0 'dynamic-docstring-function docstring)))))
 
 (require 'sr-speedbar)
-(global-set-key "\C-o" '(lambda () (interactive) (sr-speedbar-toggle) ) )
+;; (global-set-key "\C-o" '(lambda () (interactive) (sr-speedbar-toggle) ) )
 
 ;; EDIT
 
@@ -336,7 +338,7 @@
     words))
 
 ; fixes for eshell
-;; (require 'eshell)
+(require 'init-eshell)
 
 ; "emacsclient -nw" support
 (defun is-server-running ()

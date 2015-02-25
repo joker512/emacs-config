@@ -104,3 +104,5 @@ the line, to capture multiline input. (This only has effect if
 
 ;; for other code, e.g. emacsclient in TRAMP ssh shells and automatically
 ;; closing completions buffers, see the links above.
+
+(provide 'init-eshell)
