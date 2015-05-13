@@ -1,4 +1,6 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
+(setq def_var 4)
+(global-set-key (kbd "C-c u") '(lambda () (interactive) (setq def_var (read-number "Default function parameter: ")) ) )
 
 ;; REPOSITORIES
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
@@ -73,9 +75,9 @@
 ; workgroups
 (setq wg-prefix-key (kbd "C-x w"))
 (global-set-key (kbd "C-c C-<left>") 'wg-switch-to-workgroup-left)
-(global-set-key (kbd "C-c p") 'wg-switch-to-workgroup-left)
+(global-set-key (kbd "C-c ,") 'wg-switch-to-workgroup-left)
 (global-set-key (kbd "C-c C-<right>") 'wg-switch-to-workgroup-right)
-(global-set-key (kbd "C-c n") 'wg-switch-to-workgroup-right)
+(global-set-key (kbd "C-c .") 'wg-switch-to-workgroup-right)
 (workgroups-mode 1)
 
 ; save and restore session
@@ -85,8 +87,8 @@
 ;; NAVIGATION
 
 ; buffer switch
-(global-set-key (kbd "C-x n") 'next-buffer)
-(global-set-key (kbd "C-x p") 'previous-buffer)
+(global-set-key (kbd "C-x .") 'next-buffer)
+(global-set-key (kbd "C-x ,") 'previous-buffer)
 
 ; recent files support
 (recentf-mode 1)
@@ -114,11 +116,12 @@
 ; working grep search
 (global-set-key (kbd "M-g r") 'igrep)
 
-; scrolling without moving the point
-(global-set-key (kbd "C-<next>") '(lambda () (interactive) (scroll-up 1)) )
-(global-set-key (kbd "C-<prior>") '(lambda () (interactive) (scroll-down 1)) )
-(global-set-key (kbd "C-M-<prior>") '(lambda () (interactive) (scroll-other-window-down 1)) )
-(global-set-key (kbd "C-M-<next>") '(lambda () (interactive) (scroll-other-window 1)) )
+; convenient scroll
+(global-set-key (kbd "C-c C-s") 'scroll-lock-mode )
+(global-set-key (kbd "C-<next>") '(lambda () (interactive) (scroll-up def_var)) )
+(global-set-key (kbd "C-<prior>") '(lambda () (interactive) (scroll-down def_var)) )
+(global-set-key (kbd "C-M-<prior>") '(lambda () (interactive) (scroll-other-window-down def_var)) )
+(global-set-key (kbd "C-M-<next>") '(lambda () (interactive) (scroll-other-window def_var)) )
 
 ; column-number-mode
 (column-number-mode)
@@ -129,6 +132,9 @@
 ; convenient buffer processing
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (setq ibuffer-expert t)
+
+; move to the end of line with number
+(global-set-key (kbd "M-g M-g") '(lambda(n) (interactive "nGoto line: ") (progn (goto-line n) (move-end-of-line nil))))
 
 ; fast file reload
 (defun revert-buffer-no-confirm ()

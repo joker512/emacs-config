@@ -5,11 +5,14 @@
 ; pair brackets, quotes, etc.
 (autopair-global-mode)
 
+(defun rope-after-save-actions () )
+
+; keybindings for jedi
+(add-hook 'python-mode-hook (lambda() (jedi:setup) (define-key python-mode-map (kbd "C-\\") 'jedi:complete) ) )
+
 ; python code refactoring
 (pymacs-load "ropemacs" "rope-")
 (setq ropemacs-enable-autoimport 't)
-(setq ropemacs-autoimport-modules '("os" "random" "math" "shutil" "sys") )
-;; (rope-generate-autoimport-cache)
 
 ; code autocheck
 (when (load "flymake" t)
@@ -18,7 +21,7 @@
           (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
          (list "pep8" (list "--repeat" local-file "--max-line-length=180"))))
 
- (add-to-list 'flymake-allowed-file-name-masks '("\\.py\\'" flymake-pylint-init)))
+(add-to-list 'flymake-allowed-file-name-masks '("\\.py\\'" flymake-pylint-init)))
 (add-hook 'find-file-hook 'flymake-find-file-hook)
 
 (defun my-flymake-show-help ()
