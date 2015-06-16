@@ -142,19 +142,6 @@
       (interactive) (revert-buffer t t))
 (global-set-key (kbd "C-x f") (quote revert-buffer-no-confirm))
 
-; treeview mode
-(defun ad-advised-definition-p (definition)
-  "Return non-nil if DEFINITION was generated from advice information."
-  (if (or (ad-lambda-p definition)
-	  (macrop definition)
-	  (ad-compiled-p definition))
-      (let ((docstring (ad-docstring definition)))
-	(and (stringp docstring)
-	          (get-text-property 0 'dynamic-docstring-function docstring)))))
-
-(require 'sr-speedbar)
-;; (global-set-key "\C-o" '(lambda () (interactive) (sr-speedbar-toggle) ) )
-
 ;; EDIT
 
 (put 'downcase-region 'disabled nil)
@@ -267,8 +254,9 @@
 (global-set-key (kbd "C-c -") 'decrement-number-decimal)
 
 ;; CODING
-(if (not (display-graphic-p))
-      (require 'init-coding))
+;; (if (not (display-graphic-p))
+(require 'init-coding)
+(require 'cpp)
 
 ;; DESIGN
 (if (display-graphic-p)
