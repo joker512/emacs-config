@@ -10,7 +10,6 @@ SET(CMAKE_MAKEFILE_DEPENDS
   "/home/strannik/.emacs.d/elpa/irony-20150202.1453/server/../irony.el"
   "/home/strannik/.emacs.d/elpa/irony-20150202.1453/server/CMakeLists.txt"
   "/home/strannik/.emacs.d/elpa/irony-20150202.1453/server/cmake/CheckLibClangBuiltinHeadersDir.cmake"
-  "/home/strannik/.emacs.d/elpa/irony-20150202.1453/server/cmake/LibClangDiagnosticsChecker.cpp"
   "/home/strannik/.emacs.d/elpa/irony-20150202.1453/server/cmake/modules/FindLibClang.cmake"
   "/home/strannik/.emacs.d/elpa/irony-20150202.1453/server/cmake/utils.cmake"
   "/home/strannik/.emacs.d/elpa/irony-20150202.1453/server/docs/CMakeLists.txt"

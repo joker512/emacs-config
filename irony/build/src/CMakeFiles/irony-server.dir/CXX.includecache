@@ -110,10 +110,6 @@ vector
 Commands.def
 /home/strannik/.emacs.d/elpa/irony-20150202.1453/server/src/Commands.def
 
-/home/strannik/.emacs.d/elpa/irony-20150202.1453/server/src/support/CommandLineParser.cpp
-CommandLineParser.h
-/home/strannik/.emacs.d/elpa/irony-20150202.1453/server/src/support/CommandLineParser.h
-
 /home/strannik/.emacs.d/elpa/irony-20150202.1453/server/src/support/CommandLineParser.h
 string
 -
@@ -121,22 +117,6 @@ vector
 -
 
 /home/strannik/.emacs.d/elpa/irony-20150202.1453/server/src/support/NonCopyable.h
-
-/home/strannik/.emacs.d/elpa/irony-20150202.1453/server/src/support/TemporaryFile.cpp
-TemporaryFile.h
-/home/strannik/.emacs.d/elpa/irony-20150202.1453/server/src/support/TemporaryFile.h
-algorithm
--
-cstdio
--
-cstdlib
--
-fstream
--
-iostream
--
-random
--
 
 /home/strannik/.emacs.d/elpa/irony-20150202.1453/server/src/support/TemporaryFile.h
 iosfwd
@@ -151,40 +131,4 @@ ostream
 -
 string
 -
-
-/usr/lib/llvm-3.5/include/clang-c/BuildSystem.h
-clang-c/Platform.h
-/usr/lib/llvm-3.5/include/clang-c/clang-c/Platform.h
-clang-c/CXErrorCode.h
-/usr/lib/llvm-3.5/include/clang-c/clang-c/CXErrorCode.h
-clang-c/CXString.h
-/usr/lib/llvm-3.5/include/clang-c/clang-c/CXString.h
-
-/usr/lib/llvm-3.5/include/clang-c/CXErrorCode.h
-clang-c/Platform.h
-/usr/lib/llvm-3.5/include/clang-c/clang-c/Platform.h
-
-/usr/lib/llvm-3.5/include/clang-c/CXString.h
-clang-c/Platform.h
-/usr/lib/llvm-3.5/include/clang-c/clang-c/Platform.h
-
-/usr/lib/llvm-3.5/include/clang-c/Documentation.h
-clang-c/Index.h
-/usr/lib/llvm-3.5/include/clang-c/clang-c/Index.h
-
-/usr/lib/llvm-3.5/include/clang-c/Index.h
-time.h
--
-clang-c/Platform.h
-/usr/lib/llvm-3.5/include/clang-c/clang-c/Platform.h
-clang-c/CXErrorCode.h
-/usr/lib/llvm-3.5/include/clang-c/clang-c/CXErrorCode.h
-clang-c/CXString.h
-/usr/lib/llvm-3.5/include/clang-c/clang-c/CXString.h
-clang-c/BuildSystem.h
-/usr/lib/llvm-3.5/include/clang-c/clang-c/BuildSystem.h
-clang-c/Documentation.h
-/usr/lib/llvm-3.5/include/clang-c/clang-c/Documentation.h
-
-/usr/lib/llvm-3.5/include/clang-c/Platform.h
 

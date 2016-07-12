@@ -30,7 +30,7 @@
 (require 'dired-x)
 (setq-default dired-omit-files-p t)
 (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
-(global-set-key (kbd "M-.") 'dired-omit-mode)
+(define-key dired-mode-map (kbd "M-.") 'dired-omit-mode)
 
 ; don't ask confirmation on delete
 (setq dired-recursive-deletes 'always)
@@ -42,6 +42,7 @@
 
 ; windows navigation
 (global-set-key (kbd "C-x <up>") '(lambda () (interactive) (other-window -1)) )
+(global-set-key (kbd "C-x O") '(lambda () (interactive) (other-window -1)) )
 (global-set-key (kbd "C-x <down>") 'other-window)
 (global-set-key (kbd "M-S-<left>") 'shrink-window-horizontally)
 (global-set-key (kbd "M-S-<right>") 'enlarge-window-horizontally)
@@ -96,7 +97,6 @@
 
 ; convenient navigation
 (require 'ace-jump-mode)
-(global-set-key (kbd "M-h") 'ace-jump-char-mode)
 (global-set-key (kbd "M-j") 'ace-jump-word-mode)
 (global-set-key (kbd "M-u") 'ace-jump-mode-pop-mark)
 
@@ -115,13 +115,16 @@
 
 ; working grep search
 (global-set-key (kbd "M-g r") 'igrep)
+(global-set-key (kbd "M-g M-r") 'igrep)
 
 ; convenient scroll
 (global-set-key (kbd "C-c C-s") 'scroll-lock-mode )
 (global-set-key (kbd "C-<next>") '(lambda () (interactive) (scroll-up def_var)) )
 (global-set-key (kbd "C-<prior>") '(lambda () (interactive) (scroll-down def_var)) )
-(global-set-key (kbd "C-M-<prior>") '(lambda () (interactive) (scroll-other-window-down def_var)) )
-(global-set-key (kbd "C-M-<next>") '(lambda () (interactive) (scroll-other-window def_var)) )
+(global-set-key (kbd "M-<prior>") '(lambda () (interactive) (scroll-other-window-down def_var)) )
+(global-set-key (kbd "M-<next>") '(lambda () (interactive) (scroll-other-window def_var)) )
+(global-set-key (kbd "C-M-<prior>") 'scroll-other-window-down)
+(global-set-key (kbd "C-M-<next>") 'scroll-other-window)
 
 ; column-number-mode
 (column-number-mode)
@@ -135,6 +138,10 @@
 
 ; move to the end of line with number
 (global-set-key (kbd "M-g M-g") '(lambda(n) (interactive "nGoto line: ") (progn (goto-line n) (move-end-of-line nil))))
+
+; move to the end of next/line with number
+(global-set-key (kbd "M-p") (lambda () (interactive) (previous-line) (end-of-line)))
+(global-set-key (kbd "M-n") (lambda () (interactive) (next-line) (end-of-line)))
 
 ; fast file reload
 (defun revert-buffer-no-confirm ()
@@ -203,10 +210,10 @@
 ; unified remove text scheme
 (global-set-key (kbd "<C-delete>") '(lambda () (interactive) (kill-line 0)) )
 (global-set-key (kbd "<C-M-delete>") (quote backward-kill-sexp) )
+(global-set-key (kbd "<C-M-backspace>") (quote backward-kill-sexp) )
 (global-set-key (kbd "<M-delete>") (quote backward-kill-word) )
 
 (global-set-key (kbd "M-k") 'kill-whole-line)
-(global-set-key (kbd "<C-S-delete>") 'kill-whole-line)
 
 (defun backwards-zap-to-char (char)
   (interactive "cZap backwards to char: ")
@@ -276,26 +283,32 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (dichromacy)))
- '(ibuffer-formats
-   (quote
-    ((mark modified read-only " "
-	   (name 25 25 :left :elide)
-	   " "
-	   (size 9 -1 :right)
-	   " "
-	   (mode 16 16 :left :elide)
-	   " " filename-and-process)
-     (mark " "
-	   (name 16 -1)
-	   " " filename))))
+ '(column-number-mode t)
+ '(comint-buffer-maximum-size 20000)
+ '(comint-completion-addsuffix t)
+ '(comint-get-old-input (lambda nil "") t)
+ '(comint-input-ignoredups t)
+ '(comint-input-ring-size 5000)
+ '(comint-move-point-for-output nil)
+ '(comint-prompt-read-only nil)
+ '(comint-scroll-show-maximum-output t)
+ '(comint-scroll-to-bottom-on-input t)
+ '(cua-mode t nil (cua-base))
+ '(custom-enabled-themes (quote (wombat)))
+ '(ibuffer-formats (quote ((mark modified read-only " " (name 25 25 :left :elide) " " (size 9 -1 :right) " " (mode 16 16 :left :elide) " " filename-and-process) (mark " " (name 16 -1) " " filename))))
+ '(protect-buffer-bury-p nil t)
  '(speedbar-show-unknown-files t)
  '(sr-speedbar-auto-refresh nil)
  '(sr-speedbar-delete-windows nil)
  '(sr-speedbar-right-side nil)
  '(sr-speedbar-skip-other-window-p t)
  '(sr-speedbar-width-console 32)
- '(sr-speedbar-width-x 32))
+ '(sr-speedbar-width-x 32)
+ '(tramp-default-method "ssh"))
+
+; smaller font
+(set-face-attribute 'default t :font "DejaVu Sans Mono-10" )
+(set-frame-font "DejaVu Sans Mono-10" nil t)
 
 ; highlight lines in dired
 (add-hook 'dired-mode-hook '(lambda () (interactive) (hl-line-mode t)))
@@ -344,3 +357,34 @@
        (memq (process-status server-process) '(connect listen open run))))
 (if (is-server-running)
     (server-start))
+
+; not sorted
+
+(custom-set-faces
+ '(flymake-errline ((((class color)) (:background "gray10"))))
+ '(window-number-face ((t (:background "gray42" :foreground "white"))) t))
+
+(defun newline-without-break-of-line ()
+  (interactive)
+  (let ((oldpos (point)))
+    (end-of-line)
+    (newline-and-indent)
+    (goto-char oldpos)))
+
+(defun remove-nextline ()
+  (interactive)
+  (next-line)
+  (kill-whole-line)
+  (previous-line))
+
+(global-set-key (kbd "C-o") (lambda () (interactive) (beginning-of-line) (open-line 1)))
+(global-set-key (kbd "C-M-o") 'newline-without-break-of-line)
+(global-set-key (kbd "<C-S-delete>") 'remove-nextline)
+(global-set-key (kbd "M-l") (lambda (n char) (interactive "p\ncgo to char: ") (forward-char) (iy-go-to-char n char) (backward-char)))
+(global-set-key (kbd "M-h") 'iy-go-to-char-backward)
+
+(global-set-key (kbd "C-)") 'sp-splice-sexp)
+
+(put 'scroll-left 'disabled nil)
+
+(global-set-key (kbd "C-x SPC") 'whitespace-mode)
